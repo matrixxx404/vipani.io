@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "965605120195",
+    "project_id": "otpverification1-4fb4f",
+    "storage_bucket": "otpverification1-4fb4f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965605120195:android:a2c8467a9471d518796a76",
+        "android_client_info": {
+          "package_name": "com.matrix404.OTPVerification"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvB0zuqdpHB23Liaf4Y6zp3XQlky2kGKQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
