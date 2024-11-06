@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import getFirestore from "@react-native-firebase/firestore";
+import firestore from "@react-native-firebase/firestore";
 
 export default function Detail({ route, navigation }) {
-    const { uid } =route.params;
-    const [ name, setName ] = useState(" ");
-    const [ dob, setDob ] = useState(" ");
-    const [ gender, setGender ] = useState(" ");
+    const { uid } = route.params;
+    const [name, setName] = useState("");
+    const [dob, setDob] = useState("");
+    const [gender, setGender] = useState("");
 
-    const saveDetails = async () => {
-        try {
-            await firestore().collection("users").doc(uid).set({
+    const saveDetails = async () => { 
+        try { 
+            await firestore().collection("users").doc(uid).set({ 
                 name,
                 dob,
                 gender,
             });
 
-            //After saving details, navigate to dashaboard
-            navigation.navigate("Dashaboard");
-        }catch (error) {
+            // After saving details, navigate to Dashboard
+            navigation.navigate("Dashboard");
+        } catch (error) {
             console.log("Error saving details: ", error);
         }
     };
@@ -37,7 +37,7 @@ export default function Detail({ route, navigation }) {
             </Text>
             <TextInput
                 style={{
-                    height: "50",
+                    height: 50,
                     width: "100%",
                     borderColor: "black",
                     borderWidth: 1,
@@ -81,13 +81,13 @@ export default function Detail({ route, navigation }) {
                     padding: 10,
                     borderRadius: 5,
                     marginBottom: 20,
-                    alignItems: "center"
-                }}
-            >
-                <Text style={{ color: "white", fontSize: 22, fontWeight: "bold" }}>
-                    Save Details
-                </Text>
-            </TouchableOpacity>
-        </View>
-    );
+                    alignItems: "center" 
+                }} 
+            > 
+                <Text style={{ color: "white", fontSize: 22, fontWeight: "bold" }}> 
+                    Save Details 
+                </Text> 
+            </TouchableOpacity> 
+        </View> 
+    ); 
 }

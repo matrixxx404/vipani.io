@@ -1,25 +1,25 @@
-import React, {useState} from "react";
-import { View, Text,TextInput, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import auth from '@react-native-firebase/auth';
 import firestore from "@react-native-firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Login() {
-    const [ phoneNumber , setPhoneNumber ] = useState("");
-    const [ code , setCode ] = useState("");
-    const [ confirm , setConfrim ] = useState(null);
+    const [phoneNumber, setPhoneNumber] = useState(""); 
+    const [code, setCode] = useState(""); 
+    const [confirm, setConfirm] = useState(null); 
     const navigation = useNavigation();
 
-    const singInWithPhoneNumber = async () => {
+    const signInWithPhoneNumber = async () => {
         try {
             const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-            setConfrim(confirmation);
-        }catch(error) {
-            console.log("Error sending code: ",error);
+            setConfirm(confirmation);
+        } catch (error) {
+            console.log("Error sending code: ", error);
         }
     };
 
-    const confirmation = async () => {
+    const confirmCode = async () => {
         try {
             const userCredential = await confirm.confirm(code);
             const user = userCredential.user;
@@ -31,18 +31,18 @@ export default function Login() {
                 .get();
 
             if (userDocument.exists) {
-                //User is existing, navigate to Dashboard
-                navigation.navigate("Dashaboard");
-            }else {
-                //User is new, navigate to Detail
-                navigation.navigate("Detail",{ uid: user.uid });
+                // User is existing, navigate to Dashboard
+                navigation.navigate("Dashboard");
+            } else {
+                // User is new, navigate to Detail
+                navigation.navigate("Detail", { uid: user.uid });
             }
-        }catch (error) {
-            console,log("Invalid code.",error);
+        } catch (error) {
+            console.log("Invalid code.", error);
         }
     };
 
-    return(
+    return (
         <View style={{ flex: 1, padding: 10, backgroundColor: "#fcfcfa" }}>
             <Text
                 style={{
@@ -52,14 +52,14 @@ export default function Login() {
                     marginTop: 150,
                 }}
             >
-            Phone Number Authentication Using Firebase
+                Phone Number Authentication Using Firebase
             </Text>
             {!confirm ? (
                 <>
                     <Text
                         style={{
-                                marginBottom: 20,
-                                fontSize: 18,
+                            marginBottom: 20,
+                            fontSize: 18,
                         }}
                     >
                         Enter Your Phone Number:
@@ -78,59 +78,59 @@ export default function Login() {
                         onChangeText={setPhoneNumber}
                     />
                     <TouchableOpacity
-                        onPress={singInWithPhoneNumber}
+                        onPress={signInWithPhoneNumber}
                         style={{
-                          backgroundColor: "#841584",
-                          padding: 10,
-                          borderRadius: 5, 
-                          marginBottom: 20,
-                          alignItems: "center",
+                            backgroundColor: "#841584",
+                            padding: 10,
+                            borderRadius: 5,
+                            marginBottom: 20,
+                            alignItems: "center",
                         }}
                     >
-                        <Text style={{ color: "white", fontSize: 22, fontWeight: "bold"}}>
+                        <Text style={{ color: "white", fontSize: 22, fontWeight: "bold" }}>
                             Send Code 
                         </Text>
-                     </TouchableOpacity>
+                    </TouchableOpacity>
                 </>
             ) : (
                 <>
-                 <Text
-                    style={{
-                        marginBottom: 20,
-                        fontSize: 18,        
-                    }}
-                 >
-                    Enter the code sent to your phone:
-                 </Text>
-                 <TextInput
-                    style={{
-                        height: 50,
-                        width: "100%",
-                        borderColor: "black",
-                        borderWidth: 1,
-                        marginBottom: 30,
-                        paddingHorizontal: 10,
-                    }}
-                    placeholder="Enter code"
-                    value={code}
-                    onChangeText={setCode}
-                />
-                <TouchableOpacity
-                 onPress={confirmCode}
-                 style={{
-                    backgroundColor: "#841584",
-                    padding: 10,
-                    borderRadius: 5,
-                    marginBottom: 20,
-                    alignItems: "center",
-                 }}
-            >
-                <Text style={{ color: "white", fontSize: 22, fontWeight: "bold" }}>
-                    confirmCode
-                </Text>
-            </TouchableOpacity>
-        </>
-    )}
-   </View>
-  );
+                    <Text
+                        style={{
+                            marginBottom: 20,
+                            fontSize: 18,
+                        }}
+                    >
+                        Enter the code sent to your phone:
+                    </Text>
+                    <TextInput
+                        style={{
+                            height: 50,
+                            width: "100%",
+                            borderColor: "black",
+                            borderWidth: 1,
+                            marginBottom: 30,
+                            paddingHorizontal: 10,
+                        }}
+                        placeholder="Enter code"
+                        value={code}
+                        onChangeText={setCode}
+                    />
+                    <TouchableOpacity
+                        onPress={confirmCode}
+                        style={{
+                            backgroundColor: "#841584",
+                            padding: 10,
+                            borderRadius: 5,
+                            marginBottom: 20,
+                            alignItems: "center",
+                        }}
+                    >
+                        <Text style={{ color: "white", fontSize: 22, fontWeight: "bold" }}>
+                            Confirm Code
+                        </Text>
+                    </TouchableOpacity>
+                </>
+            )}
+        </View>
+    );
 }
